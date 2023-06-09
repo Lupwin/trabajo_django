@@ -15,6 +15,10 @@ class Persona(models.Model):
     class Meta:
         abstract = True
     
+    def __str__(self):
+        return f"{self.nombre} {self.apellido} - DNI {self.dni} Oficio {self.oficio}"
+    
+    
 class Oficio(models.Model):
     nombre = models.CharField(max_length=130, verbose_name="Nombre del Oficio")
 
