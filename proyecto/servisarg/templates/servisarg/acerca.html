@@ -1,0 +1,17 @@
+{% extends 'servisarg/base.html' %}
+{% load static %}
+
+{ {% block css_adicionales %}
+<link rel="stylesheet" href="{% static 'servisarg\css\acerca.css' %}">
+{% endblock %}}
+
+
+{%block titulo%}Acerca{% endblock %}
+{% block encabezado %}
+
+    <h1>Contacto</h1>
+{% endblock %}
+{% block contenido %} 
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, ea veniam quisquam impedit excepturi, atque iure ipsa itaque amet reiciendis numquam illo molestias ullam accusantium fuga corporis a consectetur cum!</p>
+
+{% endblock %}

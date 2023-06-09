@@ -1,0 +1,33 @@
+{% extends 'servisarg/base.html' %}
+{% load static %}
+
+{% block css_adicionales %}
+<link rel="stylesheet" href="{% static 'servisarg/css/detalle_trabajador.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<section class="detalle">
+  <div class="card">
+    <div class="card-body">
+        {% if trabajador.foto %}
+        <div class="foto">
+          <img src="{{ trabajador.foto.url }}" alt="Foto del Trabajador" class="card-img-top">
+        </div>
+        {% else %}
+        <div class="foto">
+          <img src="{% static 'servisarg/img/default_photo.png' %}" alt="Foto por defecto" height="200px" width="200px">
+        </div>
+        {% endif %}
+      <h1 class="card-title">{{ trabajador.nombre }} {{ trabajador.apellido }}</h1>
+      <h5 class="card-subtitle mb-2 text-muted">Oficio: {{ trabajador.oficio }}</h5>
+      <p class="card-text">Fecha de Nacimiento: {{ trabajador.fecha_nacimiento }}</p>
+      <p class="card-text">DNI: {{ trabajador.dni }}</p>
+      <p class="card-text">Dirección: {{ trabajador.direccion }}</p>
+      <p class="card-text">Teléfono: {{ trabajador.telefono }}</p>
+      <p class="card-text">Email: {{ trabajador.email }}</p>
+      <p class="card-text">Descripción: {{ trabajador.descripcion }}</p>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

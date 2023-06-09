@@ -1,29 +1,55 @@
 {% extends 'servisarg/base.html' %}
 {% load static %}
 
-{ {% block css_adicionales %}
-<link rel="stylesheet" href="{% static 'servisarg\css\lista_trabajadores.css' %}">
-{% endblock %}}
-
-
-{%block titulo%}Listado de Trabajadores {% endblock %}
-{% block encabezado %}
+{% block css_adicionales %}
+<link rel="stylesheet" href="{% static 'servisarg/css/lista_trabajadores.css' %}">
 {% endblock %}
-{% block contenido %}  
-    <h1>Trabajadores</h1>
-    <section class="lista">
-        {% for trabajador in listado_trabajadores%}
-            <article>
-                <p>Nombre: {{trabajador.nombre}}</p>
-                <p>Apellido: {{trabajador.apellido}} </p>
-                <p>Oficio: {{trabajador.oficio}} </p>
-                <p>Telefono: {{trabajador.telefono}}</p>
-                <p>Área de trabajo: {{trabajador.direccion}}</p>
-            </article>
-    
-        {% empty %}
-            <article class="article">No existen trabajadores</article>
-        {% endfor %}
-    </section>
-    
+
+{% block titulo %}Listado de Trabajadores{% endblock %}
+
+{% block contenido %}
+<div class="container">
+  <h1 class="mt-4 text-center">Trabajadores</h1>
+  <div class="row">
+    {% for trabajador in listado_trabajadores %}
+    <div class="col-md-4 mb-4">
+     <a href="{% url 'trabajador_detalle' trabajador.id %}" >
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ trabajador.id }}</h5>
+          <h5 class="card-title">{{ trabajador.nombre }} {{ trabajador.apellido }}</h5>
+          <p class="card-text">Oficio: {{ trabajador.oficio }}</p>
+          <p class="card-text">Teléfono: {{ trabajador.telefono }}</p>
+          <p class="card-text">Área de trabajo: {{ trabajador.direccion }}</p>
+        </div>
+      </div>
+      </a>
+    </div>
+    {% empty %}
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">No existen trabajadores</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<style>
+  a {
+    text-decoration: none;
+    /* Elimina el subrayado */
+    color: #333;
+    /* Cambia el color del texto */
+    cursor: pointer;
+    /* Cambia el cursor al pasar el mouse */
+}
+
+a:hover,
+a:focus {
+    background-color: #f2f2f2;
+    /* Color de fondo al pasar el mouse o enfocar */
+}
+</style>
 {% endblock %}

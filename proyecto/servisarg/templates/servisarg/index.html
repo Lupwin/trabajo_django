@@ -12,9 +12,10 @@
 {% endblock %}
 
 {% block contenido %}
-   
+
     <section class="lista">
         <h2>Categorias de Oficios</h2>
+
         {% for categoria in lista_categorias %}
             <article>
                 <p><b><a href="{% url 'trabajadores_categoria' categoria.id %}">{{ categoria.nombre }}</a></b></p>
@@ -26,8 +27,8 @@
     </section>  
 {% endblock %}
 
-  
         
+
 
 
 

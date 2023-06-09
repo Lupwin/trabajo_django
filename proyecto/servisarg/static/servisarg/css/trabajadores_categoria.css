@@ -14,3 +14,17 @@ article{
     flex: 1
     ;
 }
+a {
+    text-decoration: none;
+    /* Elimina el subrayado */
+    color: #333;
+    /* Cambia el color del texto */
+    cursor: pointer;
+    /* Cambia el cursor al pasar el mouse */
+}
+
+a:hover,
+a:focus {
+    background-color: #f2f2f2;
+    /* Color de fondo al pasar el mouse o enfocar */
+}

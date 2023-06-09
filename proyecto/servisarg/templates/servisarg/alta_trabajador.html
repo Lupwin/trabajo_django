@@ -1,24 +1,146 @@
 {% extends 'servisarg/base.html' %}
 {% load static %}
 
-{ {% block css_adicionales %}
-<link rel="stylesheet" href="{% static '\servisarg\css\alta_trabajador.css' %}">
-{% endblock %}}
-
-
-{%block titulo%}Alta de Trabajador {% endblock %}
-{% block encabezado %}
-
-    <h1>Alta de Trabajador</h1>
+{% block css_adicionales %}
+<link rel="stylesheet" href="{% static 'servisarg/css/alta_trabajador.css' %}">
 {% endblock %}
-{% block contenido %} 
+
+<div class="container">
+    {% block titulo %}Alta de Trabajador{% endblock %}
+</div>
+
+{% block encabezado %}
+    <h1 class="text-center">Alta de Trabajador</h1>
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
     <form action="" method="POST">
         {% csrf_token %}        
-        {{form.as_p}}  
 
-        <button type="submit" class="boton">Registrar</button>
-        <button type="reset" class="boton">Borrar formulario</button>
-
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.usuario.id_for_label }}">Usuario:</label>
+                    {{ form.usuario }}
+                    {% if form.usuario.errors %}
+                        {% for error in form.usuario.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Contraseña:</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        {% for error in form.nombre.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
+                    {{ form.apellido }}
+                    {% if form.apellido.errors %}
+                        {% for error in form.apellido.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.direccion.id_for_label }}">Dirección:</label>
+                    {{ form.direccion }}
+                    {% if form.direccion.errors %}
+                        {% for error in form.direccion.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
+                    {{ form.telefono }}
+                    {% if form.telefono.errors %}
+                        {% for error in form.telefono.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
+                    {{ form.descripcion }}
+                    {% if form.descripcion.errors %}
+                        {% for error in form.descripcion.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.fecha_nacimiento.id_for_label }}">Fecha de Nacimiento:</label>
+                    {{ form.fecha_nacimiento }}
+                    {% if form.fecha_nacimiento.errors %}
+                        {% for error in form.fecha_nacimiento.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.dni.id_for_label }}">DNI:</label>
+                    {{ form.dni }}
+                    {% if form.dni.errors %}
+                        {% for error in form.dni.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.oficio.id_for_label }}">Oficio:</label>
+                    {{ form.oficio }}
+                    {% if form.oficio.errors %}
+                        {% for error in form.oficio.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.clave.id_for_label }}">Clave:</label>
+                    {{ form.clave }}
+                    {% if form.clave.errors %}
+                        {% for error in form.clave.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div> -->
+        
+        {{ form.as_p }}
+        
+        <div class="container text-center">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="reset" class="btn btn-secondary">Borrar formulario</button>
+        </div>
     </form>
-
+</div>
 {% endblock %}
