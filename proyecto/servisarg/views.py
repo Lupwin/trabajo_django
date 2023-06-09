@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import TrabajadorForm, ContactoForm, OficioForm
 from .models import Trabajador, Oficio
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
 
 def index(request):
@@ -32,14 +32,17 @@ def acerca(request):
 
 def alta_trabajador(request):
     if request.method == "POST":
-        alta_trabajador_form = TrabajadorForm(request.POST, user=request.user) 
-        if alta_trabajador_form.is_valid:
-            trabajador=alta_trabajador_form.save()  #  guarda automáticamente el trabajador
-            # print(trabajador)
+        alta_trabajador_form = TrabajadorForm(request.POST, request.FILES) 
+        if alta_trabajador_form.is_valid():
+            trabajador = alta_trabajador_form.save(commit=False)  #trabajador sin guardar
+            usuario = get_user_model().objects.create_user(username= alta_trabajador_form.cleaned_data['usuario'])
+            trabajador.usuario = usuario #asigna el usuario al trabajador 
+            trabajador.foto = request.FILES.get('foto')
+            trabajador.save() #guarda el trabajador
             messages.success(request, 'Usuario dado de alta exitosamente') 
             return redirect("lista_trabajadores")
     else:
-        alta_trabajador_form = TrabajadorForm(user=request.session)
+        alta_trabajador_form = TrabajadorForm()
     contex = {'form': alta_trabajador_form}
     return render(request, 'servisarg/alta_trabajador.html', contex)
 
@@ -73,7 +76,7 @@ def alta_oficio(request):
         if alta_oficio_form.is_valid():
             alta_oficio_form.save()  #  guarda automáticamente el trabajador
             messages.success(request, 'Usuario dado de alta exitosamente') 
-            return redirect("categorias")
+            return redirect("index")
     else:
         alta_oficio_form = OficioForm()
     contex = {'form': alta_oficio_form}
@@ -82,7 +85,6 @@ def alta_oficio(request):
 def trabajador_detalle(request, id):
     # Obtener el trabajador correspondiente al ID
     trabajador = Trabajador.objects.get(id=id)
-    print(Trabajador)
     # Pasar el trabajador a la plantilla para mostrar la información
     context = {'trabajador': trabajador}
     return render(request, 'servisarg/trabajador_detalle.html', context)
@@ -96,19 +98,10 @@ def categorias(request):
     context["lista_categorias"] = lista_categorias
     
     return render(request, 'servisarg/categorias.html',context)
-from django.contrib.auth.forms import UserCreationForm
-def register_user(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user=form.save()
-            return redirect('contacto')  # Redirige al usuario a la página de inicio de sesión
-    else:
-        form = UserCreationForm()
-    return render(request, 'servisarg/register.html', {'form': form})
 
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+
+
+
 
 def user_login(request):
     mensaje_error=""

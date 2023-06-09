@@ -55,12 +55,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'lista_trabajadores'%}">Listado Trabajadores</a>
           </li>
+          {%if user.is_staff%}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'oficios' %}">Alta de Oficios</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'categorias' %}">Categorias de Oficios</a>
-          </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
           </li>
@@ -79,31 +78,17 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
-            </li>
           
           {% endif %}
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
+        
 
         
         
       </div>
     </div>
   </nav>
-  <!-- <nav class="nav" >
-        <li><a href="{% url 'index' %}">Inicio</a></li>
-        <li><a href="{% url 'acerca' %}">Nosotros</a></li>      
-        <li><a href="{% url 'alta_trabajador'%}">Alta Trabajador</a></li>
-        <li><a href="{% url 'lista_trabajadores'%}">Listado Trabajadores</a></li>
-        <li><a href="{% url 'oficios' %}">Alta de Oficios</a></li>
-        <li><a href="{% url 'categorias' %}">Categorias de Oficios</a></li>
-        <li><a href="{% url 'contacto' %}">Contacto</a></li>
-    </nav> -->
+ 
 
   {% block encabezado %}{% endblock %}
 
