@@ -3,18 +3,20 @@ from django.shortcuts import render, redirect
 from .forms import TrabajadorForm, ContactoForm, OficioForm
 from .models import Trabajador, Oficio
 from django.contrib.auth import login, get_user_model, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+
 # Create your views here.
 
 def index(request):
         
-    contex = {}
+    context = {}
     
     lista_categorias = Oficio.objects.all().order_by("nombre")
     
-    contex["lista_categorias"] = lista_categorias
+    context["lista_categorias"] = lista_categorias
 
-    return render(request,'servisarg/index.html', contex)
+    return render(request,'servisarg/index.html', context)
 
 def trabajadores_categoria(request, categoria_id):
     context = {}
@@ -43,16 +45,16 @@ def alta_trabajador(request):
             return redirect("lista_trabajadores")
     else:
         alta_trabajador_form = TrabajadorForm()
-    contex = {'form': alta_trabajador_form}
-    return render(request, 'servisarg/alta_trabajador.html', contex)
+    context = {'form': alta_trabajador_form}
+    return render(request, 'servisarg/alta_trabajador.html', context)
 
 def lista_trabajadores(request):
-    context = {}
+    contextt = {}
     
-    listado_trabajadores = Trabajador.objects.all().order_by("oficio")
-    context["listado_trabajadores"] = listado_trabajadores
+    listado_trabajadores = Trabajador.objects.all().order_by("oficio","nombre")
+    contextt["listado_trabajadores"] = listado_trabajadores
     
-    return render(request, 'servisarg/lista_trabajadores.html',context)
+    return render(request, 'servisarg/lista_trabajadores.html',contextt)
 
 
 
@@ -66,8 +68,8 @@ def contacto(request):
             return redirect("index")
     else:
         contacto_form = ContactoForm()
-    contex = {'form': contacto_form}
-    return render(request, 'servisarg/contacto.html', contex)
+    context = {'form': contacto_form}
+    return render(request, 'servisarg/contacto.html', context)
 
 
 def alta_oficio(request):
@@ -79,8 +81,8 @@ def alta_oficio(request):
             return redirect("index")
     else:
         alta_oficio_form = OficioForm()
-    contex = {'form': alta_oficio_form}
-    return render(request, 'servisarg/alta_oficio.html', contex)
+    context = {'form': alta_oficio_form}
+    return render(request, 'servisarg/alta_oficio.html', context)
 
 def trabajador_detalle(request, id):
     # Obtener el trabajador correspondiente al ID
@@ -98,9 +100,6 @@ def categorias(request):
     context["lista_categorias"] = lista_categorias
     
     return render(request, 'servisarg/categorias.html',context)
-
-
-
 
 
 def user_login(request):

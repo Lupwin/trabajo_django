@@ -2,7 +2,7 @@
 {% load static %}
 
 { {% block css_adicionales %}
-<link rel="stylesheet" href="{% static 'servisarg\css\trabajadores_categoria.css' %}">
+<link rel="stylesheet" href="{% static 'servisarg/css/trabajadores_categoria.css' %}">
 {% endblock %}}
 
 {%block titulo%}ServisArg{% endblock %}
@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block contenido %}
+
     <h1>Trabajadores en la categoría {{ categoria.nombre }}</h1>
     <section class="lista">
         {% for trabajador in trabajadores %}
