@@ -12,9 +12,6 @@ TYPE_CHOICES = [
     ("reclamo","Reclamo"),
     ("sugerencia", "Sugerencia")
 ]
-class MockUser(AbstractUser):
-    class Meta:
-        abstract = True
 
 class TrabajadorForm(forms.ModelForm):
     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date','class': 'form-control'}))
