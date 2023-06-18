@@ -264,3 +264,40 @@ def detalle_consulta(request, consulta_id):
     consulta.leido = True
     ConsultaReclamoSugerencia.objects.filter(pk=consulta_id).update(leido=True)
     return render(request, 'servisarg/contacto/detalle_consulta.html', {'consulta': consulta})
+
+
+from django.http import JsonResponse
+
+def verificar_mensajes_nuevos(request):
+    # Verificar si hay mensajes nuevos para el usuario actual
+    # es T?
+    # request.user.username
+    # es C?
+    # Id para buscar en la sala 
+    total_mensajes_antes = cache.get('total_mensajes_antes')
+    trabajador=Trabajador.objects.filter(usuario_id=request.user.id)
+    if trabajador:
+        conversaciones= Conversation.objects.filter(user2=request.user.username)
+    else:
+        conversaciones= Conversation.objects.filter(user1=request.user.username)
+    # [1,3,5]
+    total_mensajes=0
+    for conversation_db in conversaciones:
+        num_messages = Message.objects.filter(conversation=conversation_db.id).count()
+        total_mensajes=total_mensajes+num_messages
+
+    msj_nuevos=False
+    if total_mensajes_antes is None or total_mensajes_antes == total_mensajes:
+        if cache.get('accedio'):
+            # no se enviarion nungun mensaje
+            # cache.set('total_mensajes_antes', total_mensajes)
+            cache.set('acedio',False)
+        msj_nuevos=True    
+    # Actualizar el valor anterior del caché
+    cache.set('total_mensajes_antes', total_mensajes)       
+    data = {
+           'tiene_mensajes_nuevos': msj_nuevos,
+        }
+    print(data)
+    # Devolver la respuesta JSON
+    return JsonResponse({'data': data})

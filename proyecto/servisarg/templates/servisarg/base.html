@@ -30,7 +30,10 @@
   .red-div a {
     color: red;
   }
-
+  .mensajes-nuevos {
+    background-color: red;    /* Otros estilos adicionales */
+  }
+  
 </style>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -92,7 +95,7 @@
 
           {% if user.is_authenticated and not user.is_staff %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'room' %}">Mis Mensajes</a>
+            <a id="mis-mensajes" class="nav-link" href="{% url 'room' %}">Mis Mensajes</a>
           </li>
           {% endif %}
 
@@ -139,7 +142,35 @@
     <h6>ServisArg. Los mejores servicios a su disposición</h6>
 
   </footer>
+  <script>
+    // Obtener el elemento del botón "Mis Mensajes"
+    const botonMisMensajes = document.getElementById('mis-mensajes');
 
+    // Realizar una solicitud periódica cada 5 segundos
+    setInterval(() => {
+      // Realizar una solicitud al servidor para verificar si hay mensajes nuevos
+      fetch('/verificar_mensajes_nuevos')
+        .then(response => response.json())
+        .then(data => {
+          // Verificar si hay mensajes nuevos
+          console.log(data)
+          console.log(data.data.tiene_mensajes_nuevos); // Acceder correctamente al campo dentro de data
+          if (data.data.tiene_mensajes_nuevos) {
+            // Establecer el estilo del botón para indicar mensajes nuevos (por ejemplo, cambiar el color a rojo)
+            console.log("coloreando")
+            botonMisMensajes.classList.add('mensajes-nuevos');
+          } else {
+            // Restablecer el estilo del botón si no hay mensajes nuevos
+            botonMisMensajes.classList.remove('mensajes-nuevos');
+          }
+        })
+        .catch(error => {
+          console.error('Error al verificar mensajes nuevos:', error);
+        });
+    }, 5000); // Realizar la solicitud cada 5 segundos
+
+
+  </script>
     <!-- JS de Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
